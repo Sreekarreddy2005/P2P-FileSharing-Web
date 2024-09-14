@@ -1,18 +1,76 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Inter', sans-serif;
   text-align: center;
   margin-top: 50px;
+  color: black;
+  background-color: #f6e7ce;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.heading {
+  font-family: 'Norwester', sans-serif;
+  font-size: 6.5em;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.subheading {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-top: -10px;
+}
+
+.description {
+  font-family: 'Canva Sans', sans-serif;
+  font-size: 23px;
+  color: #a89576;
+  margin: 20px 0;
 }
 
 #drop-zone {
-  border: 2px dashed #f03434;
-  padding: 20px;
+  border: 3px dotted #201616;
+  padding: 100px;
   cursor: pointer;
+  border-radius: 10px;
+  margin: 20px 0;
+  
 }
 
 #drop-zone.hover {
   border-color: #333;
 }
+
+.drop-zone-text {
+  font-family: 'Canva Sans', sans-serif;
+  color: #a89576;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+#chooseFileButton, #uploadButton {
+  background-color: #751313;
+  color: #d9d9d9;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+#chooseFileButton:hover, #uploadButton:hover {
+  background-color: #5a0f0f;
+}
+
 
 #shareOptions button {
   margin: 5px;

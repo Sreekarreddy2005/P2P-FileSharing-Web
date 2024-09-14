@@ -1,6 +1,7 @@
 const socket = io();
 const dropZone = document.getElementById('drop-zone');
 const fileInput = document.getElementById('fileInput');
+const chooseFileButton = document.getElementById('chooseFileButton');
 const uploadButton = document.getElementById('uploadButton');
 const fileLink = document.getElementById('fileLink');
 const shareOptions = document.getElementById('shareOptions');
@@ -9,6 +10,10 @@ const emailLinkButton = document.getElementById('emailLinkButton');
 const whatsappLinkButton = document.getElementById('whatsappLinkButton');
 
 dropZone.addEventListener('click', () => {
+    fileInput.click();
+});
+
+chooseFileButton.addEventListener('click', () => {
     fileInput.click();
 });
 

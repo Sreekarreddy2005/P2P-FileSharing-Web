@@ -4,6 +4,16 @@ body {
   margin-top: 50px;
 }
 
+#drop-zone {
+  border: 2px dashed #f03434;
+  padding: 20px;
+  cursor: pointer;
+}
+
+#drop-zone.hover {
+  border-color: #333;
+}
+
 #shareOptions button {
   margin: 5px;
 }

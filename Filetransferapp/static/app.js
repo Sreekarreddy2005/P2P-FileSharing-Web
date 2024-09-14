@@ -45,8 +45,10 @@ uploadButton.addEventListener('click', () => {
     .then(response => response.json())
     .then(data => {
         const fileUrl = data.file_url;
+        const message = data.message;
         fileLink.innerHTML = `<a href="${fileUrl}" target="_blank">Download File</a>`;
         shareOptions.style.display = 'block';
+        alert(message); // Display success message
 
         copyLinkButton.onclick = () => {
             navigator.clipboard.writeText(fileUrl).then(() => {
@@ -62,7 +64,10 @@ uploadButton.addEventListener('click', () => {
             window.location.href = `https://wa.me/?text=Here is your file link: ${fileUrl}`;
         };
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => {
+        console.error('Error:', error);
+        alert('File upload failed. Please try again.'); // Display error message
+    });
 });
 
 socket.on('message', (data) => {

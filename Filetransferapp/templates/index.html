@@ -8,7 +8,10 @@
 </head>
 <body>
     <h1>P2P File Sharing</h1>
-    <input type="file" id="fileInput">
+    <div id="drop-zone">
+        <p>Drag and drop files here, or click to select files</p>
+        <input type="file" id="fileInput" style="display: none;">
+    </div>
     <button id="uploadButton">Upload</button>
     <p id="fileLink"></p>
     <div id="shareOptions" style="display: none;">

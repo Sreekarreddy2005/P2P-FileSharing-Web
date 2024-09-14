@@ -3,21 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>P2P File Sharing</title>
+    <title>ZipZap</title>
     <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700&family=Norwester&family=Canva+Sans&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>P2P File Sharing</h1>
-    <div id="drop-zone">
-        <p>Drag and drop files here, or click to select files</p>
-        <input type="file" id="fileInput" style="display: none;">
-    </div>
-    <button id="uploadButton">Upload</button>
-    <p id="fileLink"></p>
-    <div id="shareOptions" style="display: none;">
-        <button id="copyLinkButton">Copy Link</button>
-        <button id="emailLinkButton">Share via Email</button>
-        <button id="whatsappLinkButton">Share via WhatsApp</button>
+    <div class="container">
+        <h1 class="heading">ZipZap</h1>
+        <h2 class="subheading">Upload. Share. Done.</h2>
+        <p class="description">ZipZap is a simple and secure online platform designed to make sharing files a breeze. Simply upload your files, and ZipZap will generate a unique, shareable link. Send the link via email, messaging apps like WhatsApp, or copy and paste it directly into your communication. Your recipients can then download the files directly from the link, ensuring quick and easy file transfer.</p>
+        <div id="drop-zone">
+            <p class="drop-zone-text">Drag and drop files here, or click to select files</p>
+            <input type="file" id="fileInput" style="display: none;">
+        </div>
+        <div class="button-container">
+            <button id="chooseFileButton">Choose File</button>
+            <button id="uploadButton">Upload</button>
+        </div>
+        <p id="fileLink"></p>
+        <div id="shareOptions" style="display: none;">
+            <button id="copyLinkButton">Copy Link</button>
+            <button id="emailLinkButton">Share via Email</button>
+            <button id="whatsappLinkButton">Share via WhatsApp</button>
+        </div>
     </div>
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
     <script src="/static/app.js"></script>

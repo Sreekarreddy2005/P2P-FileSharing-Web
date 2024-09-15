@@ -75,3 +75,169 @@ body {
 #shareOptions button {
   margin: 5px;
 }
+
+#fileLink a {
+  font-family: 'Open Sans', sans-serif;
+  color: #5e17eb;
+  font-size: 2.0em; /* Adjust the size as needed */
+  text-decoration: none;
+}
+
+#fileLink a:hover {
+  text-decoration: underline;
+}
+#copyLinkButton, #emailLinkButton, #whatsappLinkButton {
+  font-family: 'Poppins', sans-serif;
+  background-color: #ffffff; /* Pure white */
+  color: #767474; /* Text color */
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: 1em; /* Adjust the size as needed */
+  transition: background-color 0.3s ease;
+}
+
+#copyLinkButton:hover, #emailLinkButton:hover, #whatsappLinkButton:hover {
+  background-color: #f0f0f0; /* Slightly darker white on hover */
+}
+.footer-text {
+  font-family: 'Arcane Hand', sans-serif;
+  color: #ff7057;
+  font-size: 1.2em; /* Adjust the size as needed */
+  margin-top: 20px;
+  text-align: center;
+}
+.parachute-image {
+  display: block;
+  margin: 0 auto 20px auto; /* Center the image and add some margin at the bottom */
+  max-width: 100px; /* Adjust the size as needed */
+  height: auto;
+}
+.header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 20px;
+}
+
+#loginButton {
+  font-family: 'Poppins', sans-serif;
+  background-color: #ffffff; /* Pure white */
+  color: #767474; /* Text color */
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 1em; /* Adjust the size as needed */
+  transition: background-color 0.3s ease;
+}
+
+#loginButton:hover {
+  background-color: #f0f0f0; /* Slightly darker white on hover */
+}
+body.login-body {
+  background-color: #1a1a1a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.login-container {
+  position: relative;
+  width: 380px; /* Increased width */
+  padding: 60px; /* Increased padding */
+  background-color: #2c2c2c;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+.login-form h2 {
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 15px; /* Increased padding */
+  margin: 15px 0; /* Increased margin */
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1em; /* Increased font size */
+}
+
+.login-form button {
+  width: 100%;
+  padding: 15px; /* Increased padding */
+  background-color: #5e17eb;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1em; /* Increased font size */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-form button:hover {
+  background-color: #4a13c4;
+}
+
+.login-form p {
+  color: #ffffff;
+  margin: 10px 0;
+}
+
+.login-form a {
+  color: #5e17eb;
+  text-decoration: none;
+}
+
+.login-form a:hover {
+  text-decoration: underline;
+}
+
+.circle {
+  position: absolute;
+  width: 150px; /* Increased size */
+  height: 150px; /* Increased size */
+  background-color: rgba(94, 23, 235, 0.5); /* Decreased transparency */
+  border-radius: 50%;
+}
+
+.left-circle {
+  top: -60px;
+  left: -60px;
+}
+
+.right-circle {
+  bottom: -60px;
+  right: -60px;
+}
+.error-message {
+  color: #ff7057;
+  margin-top: 10px;
+  font-size: 0.9em;
+}
+.auth-button {
+  background-color: #ffffff;
+  color:red;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.header {
+  display: flex;
+  gap: 10px; /* Adjust the gap as needed */
+}
+

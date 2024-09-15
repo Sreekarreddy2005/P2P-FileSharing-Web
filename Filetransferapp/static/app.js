@@ -8,6 +8,13 @@ const shareOptions = document.getElementById('shareOptions');
 const copyLinkButton = document.getElementById('copyLinkButton');
 const emailLinkButton = document.getElementById('emailLinkButton');
 const whatsappLinkButton = document.getElementById('whatsappLinkButton');
+const loginButton = document.getElementById('loginButton');
+const logoutButton = document.getElementById('logoutButton');
+
+// Function to display a confirmation message
+function displayConfirmationMessage(message) {
+    alert(message);
+}
 
 dropZone.addEventListener('click', () => {
     fileInput.click();
@@ -31,6 +38,13 @@ dropZone.addEventListener('drop', (e) => {
     dropZone.classList.remove('hover');
     const files = e.dataTransfer.files;
     fileInput.files = files;
+    displayConfirmationMessage('File has been chosen: ' + files[0].name);
+});
+
+fileInput.addEventListener('change', () => {
+    if (fileInput.files.length > 0) {
+        displayConfirmationMessage('File has been chosen: ' + fileInput.files[0].name);
+    }
 });
 
 uploadButton.addEventListener('click', () => {
@@ -44,6 +58,9 @@ uploadButton.addEventListener('click', () => {
     })
     .then(response => response.json())
     .then(data => {
+        if (data.error) {
+            throw new Error(data.error);
+        }
         const fileUrl = data.file_url;
         const message = data.message;
         fileLink.innerHTML = `<a href="${fileUrl}" target="_blank">Download File</a>`;
@@ -72,4 +89,24 @@ uploadButton.addEventListener('click', () => {
 
 socket.on('message', (data) => {
     console.log(data);
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const loggedIn = document.cookie.split('; ').find(row => row.startsWith('loggedIn='));
+    if (loggedIn && loggedIn.split('=')[1] === 'true') {
+        loginButton.textContent = 'Logged In';
+        loginButton.disabled = true;
+        logoutButton.style.display = 'inline-block';
+    } else {
+        loginButton.textContent = 'Login';
+        loginButton.disabled = false;
+        logoutButton.style.display = 'none';
+    }
+});
+
+logoutButton.addEventListener('click', () => {
+    document.cookie = "loggedIn=false; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    loginButton.textContent = 'Login';
+    loginButton.disabled = false;
+    logoutButton.style.display = 'none';
 });

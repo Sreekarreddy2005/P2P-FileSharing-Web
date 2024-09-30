@@ -1,128 +1,120 @@
-from flask import Flask, render_template, request, send_from_directory, jsonify
-from flask_socketio import SocketIO, emit
 import os
-import uuid
+import json
+from flask import Flask, render_template, request, redirect, url_for, jsonify, session, send_from_directory
+from werkzeug.utils import secure_filename
 
+# Configure the Flask app
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'secret!'
-socketio = SocketIO(app)
+app.secret_key = 'supersecretkey'  # Needed for session management
 
-UPLOAD_FOLDER = 'uploads'
-if not os.path.exists(UPLOAD_FOLDER):
-    os.makedirs(UPLOAD_FOLDER)
-from flask import Flask, render_template, request, jsonify, send_from_directory, make_response
-from flask_socketio import SocketIO, emit
-import os
-import uuid
-import re
+UPLOAD_FOLDER = 'uploads'  # Directory to store uploaded files
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'zip'}  # Allowed file extensions
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max-limit
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'secret!'
-socketio = SocketIO(app)
+USER_FILE = 'users.json'  # File to store user data
 
-# Dummy user data for demonstration purposes
-users = {}
+# Helper function to check if a file is allowed
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-UPLOAD_FOLDER = 'uploads'
+# Ensure upload directory exists
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
+# Load users from file
+def load_users():
+    try:
+        with open(USER_FILE, 'r') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return {}
+
+# Save users to file
+def save_users(users):
+    with open(USER_FILE, 'w') as f:
+        json.dump(users, f)
+
+# Initialize users
+users = load_users()
+
+# Home route
 @app.route('/')
 def index():
     return render_template('index.html')
 
+# File upload route
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part in request'}), 400
+    
+    files = request.files.getlist('file')
+    uploaded_file_urls = []
+    
+    for file in files:
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            uploaded_file_urls.append(url_for('uploaded_file', filename=filename, _external=True))
+    
+    if uploaded_file_urls:
+        return jsonify({'file_urls': uploaded_file_urls})
+    else:
+        return jsonify({'error': 'No valid files uploaded'}), 400
+
+# Route to serve uploaded files
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+# Login route
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        data = request.get_json()
-        email = data.get('email')
-        password = data.get('password')
+        email = request.json['email']
+        password = request.json['password']
+        
         if email in users and users[email] == password:
-            response = make_response(jsonify({'success': True}))
-            response.set_cookie('loggedIn', 'true', max_age=60*60*24*30)  # Cookie expires in 30 days
-            return response
+            session['logged_in'] = True
+            return jsonify({'success': True})
         else:
-            return jsonify({'error': 'Invalid email or password.'})
+            return jsonify({'error': 'Invalid credentials'}), 401
+    
     return render_template('login.html')
 
+# Register route
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        data = request.get_json()
-        email = data.get('email')
-        password = data.get('password')
-
-        # Email validation regex
-        email_regex = r'^[^\s@]+@[^\s@]+\.[^\s@]+$'
-        # Password validation regex (at least one capital letter, one symbol, and minimum length of 8)
-        password_regex = r'^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9]).{8,}$'
-
-        if not re.match(email_regex, email):
-            return jsonify({'error': 'Invalid email format.'})
-
-        if not re.match(password_regex, password):
-            return jsonify({'error': 'Password must contain at least one capital letter, one symbol, and be at least 8 characters long.'})
-
+        email = request.json['email']
+        password = request.json['password']
+        
         if email in users:
-            return jsonify({'error': 'Email is already registered. <a href="/login">Go to Login</a>'})
-
+            return jsonify({'error': 'User already exists'}), 400
+        
         users[email] = password
+        save_users(users)  # Save updated user data
         return jsonify({'success': True})
+    
     return render_template('register.html')
 
-@app.route('/forgot-password')
-def forgot_password():
-    return render_template('forgot-password.html')
+# Logout route
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    return redirect(url_for('index'))
 
-@app.route('/upload', methods=['POST'])
-def upload():
-    try:
-        if 'file' not in request.files:
-            return jsonify({'error': 'No file part'}), 400
-        file = request.files['file']
-        if file.filename == '':
-            return jsonify({'error': 'No selected file'}), 400
-        filename = str(uuid.uuid4()) + os.path.splitext(file.filename)[1]
-        file.save(os.path.join(UPLOAD_FOLDER, filename))
-        file_url = request.host_url + 'download/' + filename
-        return jsonify({'file_url': file_url, 'message': 'File uploaded successfully!'})
-    except Exception as e:
-        return jsonify({'error': 'File upload failed. Please try again.'}), 500
+# Session status route to check if user is logged in
+@app.route('/session-status')
+def session_status():
+    return jsonify({'logged_in': 'logged_in' in session})
 
-@app.route('/download/<filename>')
-def download(filename):
-    return send_from_directory(UPLOAD_FOLDER, filename)
+# Static route to serve CSS, JS, and images
+@app.route('/static/<path:filename>')
+def serve_static(filename):
+    return send_from_directory('static', filename)
 
-@socketio.on('connect')
-def handle_connect():
-    emit('message', {'data': 'Connected'})
-
+# Run the app
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
-
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-@app.route('/upload', methods=['POST'])
-def upload():
-    if 'file' not in request.files:
-        return jsonify({'error': 'No file part'}), 400
-    file = request.files['file']
-    if file.filename == '':
-        return jsonify({'error': 'No selected file'}), 400
-    filename = str(uuid.uuid4()) + os.path.splitext(file.filename)[1]
-    file.save(os.path.join(UPLOAD_FOLDER, filename))
-    file_url = request.host_url + 'download/' + filename
-    return jsonify({'file_url': file_url, 'message': 'File uploaded successfully!'})
-
-@app.route('/download/<filename>')
-def download(filename):
-    return send_from_directory(UPLOAD_FOLDER, filename)
-
-@socketio.on('connect')
-def handle_connect():
-    emit('message', {'data': 'Connected'})
-
-if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    app.run(debug=True)

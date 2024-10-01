@@ -3,13 +3,14 @@ body {
   text-align: center;
   margin-top: 50px;
   color: black;
-  background-color: #f6e7ce;
+  background-color: #f1e0c3;
 }
 
 .container {
   max-width: 800px;
   margin: 0 auto;
   padding: 0 20px;
+  text-align: center;
 }
 
 .heading {
@@ -27,10 +28,28 @@ body {
 }
 
 .description {
-  font-family: 'Canva Sans', sans-serif;
+  font-family: 'Roboto Slab', serif; /* Changed to Roboto Slab */
   font-size: 23px;
   color: #a89576;
   margin: 20px 0;
+}
+
+#features {
+  background-color: #e5d9b4; /* Changed background color */
+  padding: 20px; /* Added padding for better spacing */
+}
+
+#features h3 {
+    font-family: 'Edu Australia VIC WA NT Hand Dots', cursive; /* Set font for header */
+    font-size: 1.3em; /* Medium size for header */
+    font-weight: bold; /* Bold weight */
+    color: white; /* Optional, change based on your design */
+}
+
+#features p {
+    text-align: center; /* Align text to the center */
+    color: black; /* Optional, change based on your design */
+    font-weight: bold;
 }
 
 #drop-zone {
@@ -39,7 +58,7 @@ body {
   cursor: pointer;
   border-radius: 10px;
   margin: 20px 0;
-  
+  position: relative;
 }
 
 #drop-zone.hover {
@@ -48,6 +67,7 @@ body {
 
 .drop-zone-text {
   font-family: 'Canva Sans', sans-serif;
+  font-size: 1.5em;
   color: #a89576;
 }
 
@@ -55,7 +75,6 @@ body {
   display: flex;
   justify-content: center;
   gap: 20px;
-  margin-top: 10px;
 }
 
 #chooseFileButton, #uploadButton {
@@ -64,100 +83,103 @@ body {
   border: none;
   padding: 10px 20px;
   border-radius: 20px;
-  cursor: pointer;
 }
 
 #chooseFileButton:hover, #uploadButton:hover {
-  background-color: #5a0f0f;
+    background-color: #5a0f0f;
 }
 
-
 #shareOptions button {
-  margin: 5px;
+    margin: 5px;
 }
 
 #fileLink a {
-  font-family: 'Open Sans', sans-serif;
-  color: #5e17eb;
-  font-size: 2.0em; /* Adjust the size as needed */
-  text-decoration: none;
+    font-family: 'Open Sans', sans-serif;
+    color: #5e17eb;
+    font-size: 2.0em; 
+    text-decoration: none;
 }
 
 #fileLink a:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
+
 #copyLinkButton, #emailLinkButton, #whatsappLinkButton {
-  font-family: 'Poppins', sans-serif;
-  background-color: #ffffff; /* Pure white */
-  color: #767474; /* Text color */
-  border: none;
-  padding: 10px 20px;
-  margin: 5px;
-  cursor: pointer;
-  border-radius: 10px;
-  font-size: 1em; /* Adjust the size as needed */
-  transition: background-color 0.3s ease;
+    font-family: 'Poppins', sans-serif; 
+    background-color: #ffffff; 
+    color: #767474; 
+    border: none; 
+    padding:10px20px; 
+    margin :5px; 
+    cursor:pointer; 
+    border-radius :10px; 
+    font-size :1em; 
+    transition :background-color0.3s ease; 
 }
 
 #copyLinkButton:hover, #emailLinkButton:hover, #whatsappLinkButton:hover {
-  background-color: #f0f0f0; /* Slightly darker white on hover */
+    background-color:#f0f0f0; 
 }
+
 .footer-text {
-  font-family: 'Arcane Hand', sans-serif;
-  color: #ff7057;
-  font-size: 1.2em; /* Adjust the size as needed */
-  margin-top: 20px;
-  text-align: center;
+    font-family:'Arcane Hand', sans-serif; 
+    color:#ff7057; 
+    font-size :1.2em; 
+    margin-top :20px; 
+    text-align:center; 
 }
+
 .parachute-image {
-  display: block;
-  margin: 0 auto 20px auto; /* Center the image and add some margin at the bottom */
-  max-width: 100px; /* Adjust the size as needed */
+  display: block; /* Ensure it behaves like a block element */
+  margin: 0 auto; /* Center horizontally */
+  max-width: 100px; /* Adjust size as needed */
   height: auto;
 }
+
+
 .header {
-  display: flex;
-  justify-content: flex-end;
-  padding: 10px 20px;
+    display:flex; 
+    justify-content:flex-end; 
+    padding :10px20px; 
 }
 
 #loginButton {
-  font-family: 'Poppins', sans-serif;
-  background-color: #ffffff; /* Pure white */
-  color: #767474; /* Text color */
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 1em; /* Adjust the size as needed */
-  transition: background-color 0.3s ease;
+   font-family:'Poppins', sans-serif; 
+   background-color:#ffffff; /* Pure white */ 
+   color:#767474; /* Text color */ 
+   border:none; 
+   padding :10px20px; 
+   cursor:pointer; 
+   border-radius :5px; 
+   font-size :1em; /* Adjust the size as needed */ 
+   transition :background-color0.3s ease; 
 }
 
-#loginButton:hover {
-  background-color: #f0f0f0; /* Slightly darker white on hover */
+#loginButton:hover {  
+   background-color:#f0f0f0; /* Slightly darker white on hover */  
 }
 body.login-body {
-  background-color: #1a1a1a;
+  background-color: #f6e7ce;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   margin: 0;
-  font-family: 'Poppins', sans-serif;
 }
 
 .login-container {
   position: relative;
   width: 380px; /* Increased width */
   padding: 60px; /* Increased padding */
-  background-color: #2c2c2c;
+  background-color: #f6e7ce;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   text-align: center;
 }
 
 .login-form h2 {
-  color: #ffffff;
+  color: rgb(219, 132, 132);
+  font-size: 3.5em;
   margin-bottom: 20px;
 }
 
@@ -167,77 +189,104 @@ body.login-body {
   margin: 15px 0; /* Increased margin */
   border: none;
   border-radius: 5px;
-  font-size: 1.1em; /* Increased font size */
 }
 
-.login-form button {
-  width: 100%;
-  padding: 15px; /* Increased padding */
-  background-color: #5e17eb;
-  color: #ffffff;
-  border: none;
-  border-radius: 5px;
-  font-size: 1.1em; /* Increased font size */
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+.login-form button {  
+   width :100%;  
+   padding :15px ; /* Increased padding */  
+   background-color :maroon ;  
+   color:#ffffff ;  
+   border:none ;  
+   border-radius :5px ;  
+   font-size :1.1em ; /* Increased font size */    
+   cursor:pointer ;    
+   transition:bg-color0.3s ease ;
 }
-
-.login-form button:hover {
-  background-color: #4a13c4;
+.login-form button:hover {    
+     background-color:#4a13c4 ;
 }
-
-.login-form p {
-  color: #ffffff;
-  margin: 10px 0;
+.login-form p {    
+     color:#4a13c4 ;
+     margin-top10 ;
 }
-
-.login-form a {
-  color: #5e17eb;
-  text-decoration: none;
+.login-form a {    
+     color:rbg(219,132,132);    
+     text-decoration:none ;
 }
-
-.login-form a:hover {
-  text-decoration: underline;
+.login-form a:hover {    
+     text-decoration:inline ;
 }
-
-.circle {
-  position: absolute;
-  width: 150px; /* Increased size */
-  height: 150px; /* Increased size */
-  background-color: rgba(94, 23, 235, 0.5); /* Decreased transparency */
-  border-radius: 50%;
+.circle {    
+     position:absolute ;
+     width150 px ; /* Increased size */    
+     height150 px ; /* Increased size */    
+     background-color:#c2b194 ;
+     border-radius50 % ;
+     opacity30 % ;
 }
-
-.left-circle {
-  top: -60px;
-  left: -60px;
+.left-circle {    
+     top:-60 px ;
+     left:-60 px ;
 }
-
-.right-circle {
-  bottom: -60px;
-  right: -60px;
+.right-circle {    
+     bottom:-60 px ;
+     right:-60 px ;
 }
-.error-message {
-  color: #ff7057;
-  margin-top: 10px;
-  font-size: 0.9em;
+.error-message {    
+     color:#ff7057 ;
+     margin-top10 ;
+     font-size0.9 em ;
 }
-.auth-button {
-  background-color: #ffffff;
-  color:red;
-  border: none;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 4px;
+.auth-button {    
+     background-color:#ffffff ;
+     color:red ;
+     border:none ;
+     padding10 px ,20 px ;
+     text-align:center ;
+     text-decoration:none ;
+     display:inline-block ;
+     font-size16 px ;
+     margin4 px ,2 px ;
+     cursor:pointer ;
+     border-radius4 px ;
 }
-
-.header {
-  display: flex;
-  gap: 10px; /* Adjust the gap as needed */
-}
-
+.header {    
+      display:flex ;    
+      gap10 px ; /* Adjust the gap as needed */   
+} @media (max-width768 px) {   
+      .heading {   
+           font-size5.0 em ;
+      }
+      .subheading {   
+           font-size1.2 em ;   
+      }
+      .description {   
+           font-size1 em ;   
+      }
+      .drop-zone-text {   
+           font-size1 em ;   
+           padding5 px ;   
+      }
+      .auth-button ,#chooseFileButton ,#uploadButton {   
+           font-size1.1 em ;   
+           padding8 px ,15 px ;   
+      }   
+} @media (max-width480 px) {   
+      .heading {   
+           font-size5.0 em ;   
+      }
+      .subheading {   
+           font-size1.8 em ;   
+      }
+      .description {   
+           font-size1.2 em ;   
+      }
+      .drop-zone-text {   
+           font-size1.1 em ;   
+           padding5 px ;   
+      }
+      .auth-button ,#chooseFileButton ,#uploadButton {   
+           font-size1.1 em ;   
+           padding5 px ,10 px ;   
+      }   
+} 

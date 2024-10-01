@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZipZap</title>
     <link rel="stylesheet" href="/static/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Edu+Australia+VIC+WA+NT+Hand+Dots:wght@700&family=Roboto+Slab&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -16,31 +16,54 @@
         <h1 class="heading">ZipZap</h1>
         <h2 class="subheading">Upload. Share. Done.</h2>
         <p class="description">ZipZap is a simple and secure online platform designed to make sharing files a breeze.</p>
+
         <div id="drop-zone" aria-label="File Drop Zone">
             <img src="/static/cloud-storage-uploading-option.png" alt="Parachute" class="parachute-image">
             <p class="drop-zone-text">Drag and drop files here, or click to select files</p>
             <input type="file" id="fileInput" name="file" style="display: none;" multiple>
         </div>
-        <div id="fileNames"></div>
-        <div id="uploadStatus"></div>
+
+        <!-- Centered Upload Button Below Drop Zone -->
         <div class="button-container">
             <button id="chooseFileButton" aria-label="Choose File">Choose File</button>
             <button id="uploadButton" aria-label="Upload File">Upload</button>
         </div>
+
+        <div id="fileNames"></div>
+        <div id="uploadStatus"></div>
+
+        <!-- New section for displaying QR codes -->
+        <div id="qrCodesContainer" style="display: none;">
+            <h3>Scan to Download Files:</h3>
+            <div id="qrCodes"></div>
+        </div>
+
         <p id="fileLink"></p>
         <div id="shareOptions" style="display: none;">
             <button id="copyLinkButton" aria-label="Copy Link">Copy Link</button>
             <button id="emailLinkButton" aria-label="Share via Email">Share via Email</button>
             <button id="whatsappLinkButton" aria-label="Share via WhatsApp">Share via WhatsApp</button>
         </div>
+
     </div>
+
+    <!-- Footer -->
     <footer>
         <p class="footer-text">Secure, Speed, and Cross-platform compatibility.</p>
     </footer>
+
+    <!-- New Content Section Below Footer -->
+    <section id="features">
+        <h3>Why Choose ZipZap?</h3>
+        <p>Files are shared straight from your device. When you close the browser tab, your files are no longer accessible, minimizing the risk of anyone getting unwanted access.</p>
+        <p>ZipZap uses the peer-to-peer technology WebRTC to find the shortest path, meaning sometimes your data doesn't even have to leave the building.</p>
+    </section>
+
     <script src="/static/app.js"></script>
     <script src="/static/login.js"></script>
+
+    <!-- Check login status on page load -->
     <script>
-        // Check login status on page load
         document.addEventListener('DOMContentLoaded', function() {
             fetch('/session-status')
                 .then(response => response.json())

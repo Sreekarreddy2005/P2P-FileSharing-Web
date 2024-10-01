@@ -5,15 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - ZipZap</title>
     <link rel="stylesheet" href="/static/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&family=Arcane+Hand&display=swap" rel="stylesheet">
 </head>
 <body class="login-body">
     <div class="login-container">
         <div class="login-form">
             <h2>LOGIN</h2>
-            <input type="email" id="email" placeholder="EMAIL" required>
-            <input type="password" id="password" placeholder="PASSWORD" required>
-            <button type="submit" id="loginSubmit">SUBMIT</button>
+            <form id="loginForm">
+                <input type="email" id="email" name="email" placeholder="EMAIL" required>
+                <input type="password" id="password" name="password" placeholder="PASSWORD" required>
+                <button type="submit" id="loginSubmit">SUBMIT</button>
+            </form>
             <p><a href="/forgot-password">FORGOT PASSWORD?</a></p>
             <p>Don't have an account? <a href="/register">REGISTER</a></p>
             <p id="errorMessage" class="error-message"></p>

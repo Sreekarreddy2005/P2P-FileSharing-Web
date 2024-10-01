@@ -5,22 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZipZap</title>
     <link rel="stylesheet" href="/static/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700&family=Norwester&family=Canva+Sans&family=Open+Sans:wght@400&family=Poppins:wght@400&family=Arcane+Hand&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
         <div class="header">
             <button id="loginButton" class="auth-button" onclick="window.location.href='/login'">Login</button>
-            <button id="logoutButton" class="auth-button" style="display: none;">Logout</button>
+            <button id="logoutButton" class="auth-button" style="display: none;" onclick="window.location.href='/logout'">Logout</button>
         </div>
         <h1 class="heading">ZipZap</h1>
         <h2 class="subheading">Upload. Share. Done.</h2>
-        <p class="description">ZipZap is a simple and secure online platform designed to make sharing files a breeze. Simply upload your files, and ZipZap will generate a unique, shareable link. Send the link via email, messaging apps like WhatsApp, or copy and paste it directly into your communication. Your recipients can then download the files directly from the link, ensuring quick and easy file transfer.</p>
+        <p class="description">ZipZap is a simple and secure online platform designed to make sharing files a breeze.</p>
         <div id="drop-zone" aria-label="File Drop Zone">
-            <img src="/static/parachute.png" alt="Parachute" class="parachute-image">
+            <img src="/static/cloud-storage-uploading-option.png" alt="Parachute" class="parachute-image">
             <p class="drop-zone-text">Drag and drop files here, or click to select files</p>
-            <input type="file" id="fileInput" style="display: none;">
+            <input type="file" id="fileInput" name="file" style="display: none;" multiple>
         </div>
+        <div id="fileNames"></div>
+        <div id="uploadStatus"></div>
         <div class="button-container">
             <button id="chooseFileButton" aria-label="Choose File">Choose File</button>
             <button id="uploadButton" aria-label="Upload File">Upload</button>
@@ -35,8 +37,24 @@
     <footer>
         <p class="footer-text">Secure, Speed, and Cross-platform compatibility.</p>
     </footer>
-    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
     <script src="/static/app.js"></script>
     <script src="/static/login.js"></script>
+    <script>
+        // Check login status on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/session-status')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.logged_in) {
+                        document.getElementById('loginButton').style.display = 'none';
+                        document.getElementById('logoutButton').style.display = 'block';
+                    } else {
+                        document.getElementById('loginButton').style.display = 'block';
+                        document.getElementById('logoutButton').style.display = 'none';
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
 </body>
 </html>

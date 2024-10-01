@@ -2,18 +2,16 @@ import os
 import pandas as pd
 from flask import Flask, render_template, request, redirect, url_for, jsonify, session, send_from_directory
 from werkzeug.utils import secure_filename
+import qrcode  # Importing the qrcode library
 
 # Configure the Flask app
 app = Flask(__name__)
 app.secret_key = 'supersecretkey'
-
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'zip'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max-limit
-
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  #16MB max-limit
 USER_FILE = 'users.csv'
-
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
@@ -46,25 +44,38 @@ def upload_file():
         return jsonify({'error': 'No files provided'}), 400
 
     uploaded_file_urls = []
+    qr_codes = []  # List to hold QR code URLs
     
     for file in files:
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             try:
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                uploaded_file_urls.append(url_for('uploaded_file', filename=filename, _external=True))
+                file_url = url_for('uploaded_file', filename=filename, _external=True)
+                uploaded_file_urls.append(file_url)
+                
+                # Generate QR code for the file URL
+                qr_code_img_path = os.path.join(app.config['UPLOAD_FOLDER'], f"{filename}.png")
+                qr_code_img = qrcode.make(file_url)
+                qr_code_img.save(qr_code_img_path)
+                qr_codes.append(url_for('uploaded_qr_code', filename=f"{filename}.png", _external=True))
+                
             except Exception as e:
                 return jsonify({'error': str(e)}), 500
         else:
             return jsonify({'error': f'File {file.filename} is not allowed'}), 400
 
     if uploaded_file_urls:
-        return jsonify({'file_urls': uploaded_file_urls})
+        return jsonify({'file_urls': uploaded_file_urls, 'qr_codes': qr_codes})
     else:
         return jsonify({'error': 'No valid files uploaded'}), 400
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+@app.route('/uploads/qrcodes/<filename>')
+def uploaded_qr_code(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 @app.route('/login', methods=['GET', 'POST'])

@@ -1,79 +1,77 @@
 import os
-import json
+import pandas as pd
 from flask import Flask, render_template, request, redirect, url_for, jsonify, session, send_from_directory
 from werkzeug.utils import secure_filename
 
 # Configure the Flask app
 app = Flask(__name__)
-app.secret_key = 'supersecretkey'  # Needed for session management
+app.secret_key = 'supersecretkey'
 
-UPLOAD_FOLDER = 'uploads'  # Directory to store uploaded files
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'zip'}  # Allowed file extensions
+UPLOAD_FOLDER = 'uploads'
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'zip'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max-limit
 
-USER_FILE = 'users.json'  # File to store user data
+USER_FILE = 'users.csv'
 
-# Helper function to check if a file is allowed
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-# Ensure upload directory exists
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
-# Load users from file
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 def load_users():
     try:
-        with open(USER_FILE, 'r') as f:
-            return json.load(f)
+        return pd.read_csv(USER_FILE, index_col='email').to_dict()['password']
     except FileNotFoundError:
         return {}
 
-# Save users to file
 def save_users(users):
-    with open(USER_FILE, 'w') as f:
-        json.dump(users, f)
+    df = pd.DataFrame(list(users.items()), columns=['email', 'password'])
+    df.to_csv(USER_FILE, index=False)
 
-# Initialize users
 users = load_users()
 
-# Home route
 @app.route('/')
 def index():
     return render_template('index.html')
 
-# File upload route
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if 'file' not in request.files:
         return jsonify({'error': 'No file part in request'}), 400
     
     files = request.files.getlist('file')
+    if not files:
+        return jsonify({'error': 'No files provided'}), 400
+
     uploaded_file_urls = []
     
     for file in files:
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            uploaded_file_urls.append(url_for('uploaded_file', filename=filename, _external=True))
-    
+            try:
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                uploaded_file_urls.append(url_for('uploaded_file', filename=filename, _external=True))
+            except Exception as e:
+                return jsonify({'error': str(e)}), 500
+        else:
+            return jsonify({'error': f'File {file.filename} is not allowed'}), 400
+
     if uploaded_file_urls:
         return jsonify({'file_urls': uploaded_file_urls})
     else:
         return jsonify({'error': 'No valid files uploaded'}), 400
 
-# Route to serve uploaded files
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
-# Login route
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = request.json['email']
-        password = request.json['password']
+        email = request.json.get('email')
+        password = request.json.get('password')
         
         if email in users and users[email] == password:
             session['logged_in'] = True
@@ -83,38 +81,33 @@ def login():
     
     return render_template('login.html')
 
-# Register route
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        email = request.json['email']
-        password = request.json['password']
+        email = request.json.get('email')
+        password = request.json.get('password')
         
         if email in users:
             return jsonify({'error': 'User already exists'}), 400
         
         users[email] = password
-        save_users(users)  # Save updated user data
+        save_users(users)
         return jsonify({'success': True})
     
     return render_template('register.html')
 
-# Logout route
 @app.route('/logout')
 def logout():
     session.pop('logged_in', None)
     return redirect(url_for('index'))
 
-# Session status route to check if user is logged in
 @app.route('/session-status')
 def session_status():
     return jsonify({'logged_in': 'logged_in' in session})
 
-# Static route to serve CSS, JS, and images
 @app.route('/static/<path:filename>')
 def serve_static(filename):
     return send_from_directory('static', filename)
 
-# Run the app
 if __name__ == '__main__':
     app.run(debug=True)

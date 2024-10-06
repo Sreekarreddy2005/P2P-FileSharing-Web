@@ -138,9 +138,9 @@ body {
 
 
 .header {
-    display:flex; 
-    justify-content:flex-end; 
-    padding :10px20px; 
+    display: flex; 
+    justify-content: flex-end; 
+    padding :10px 20px; 
 }
 
 #loginButton {
@@ -148,8 +148,8 @@ body {
    background-color:#ffffff; /* Pure white */ 
    color:#767474; /* Text color */ 
    border:none; 
-   padding :10px20px; 
-   cursor:pointer; 
+   padding :10px 20px; 
+   cursor: pointer; 
    border-radius :5px; 
    font-size :1em; /* Adjust the size as needed */ 
    transition :background-color0.3s ease; 
@@ -207,7 +207,7 @@ body.login-body {
 }
 .login-form p {    
      color:#4a13c4 ;
-     margin-top10 ;
+     margin-top:10 ;
 }
 .login-form a {    
      color:rbg(219,132,132);    
@@ -218,75 +218,75 @@ body.login-body {
 }
 .circle {    
      position:absolute ;
-     width150 px ; /* Increased size */    
-     height150 px ; /* Increased size */    
+     width: 150px ; /* Increased size */    
+     height: 150px ; /* Increased size */    
      background-color:#c2b194 ;
-     border-radius50 % ;
-     opacity30 % ;
+     border-radius: 50% ;
+     opacity: 30% ;
 }
 .left-circle {    
-     top:-60 px ;
-     left:-60 px ;
+     top: -60px ;
+     left: -60px ;
 }
 .right-circle {    
-     bottom:-60 px ;
-     right:-60 px ;
+     bottom: -60px ;
+     right: -60px ;
 }
 .error-message {    
      color:#ff7057 ;
-     margin-top10 ;
-     font-size0.9 em ;
+     margin-top:10 ;
+     font-size: 0.9em ;
 }
 .auth-button {    
      background-color:#ffffff ;
      color:red ;
      border:none ;
-     padding10 px ,20 px ;
+     padding:10px ,20px ;
      text-align:center ;
      text-decoration:none ;
      display:inline-block ;
-     font-size16 px ;
-     margin4 px ,2 px ;
-     cursor:pointer ;
-     border-radius4 px ;
+     font-size:16px ;
+     margin:4px ,2px ;
+     cursor: pointer ;
+     border-radius:4px ;
 }
 .header {    
       display:flex ;    
-      gap10 px ; /* Adjust the gap as needed */   
-} @media (max-width768 px) {   
+      gap:10px ; /* Adjust the gap as needed */   
+} @media (max-width 768px) {   
       .heading {   
-           font-size5.0 em ;
+           font-size:5.0em ;
       }
       .subheading {   
-           font-size1.2 em ;   
+           font-size:1.2em ;   
       }
       .description {   
-           font-size1 em ;   
+           font-size:1em ;   
       }
       .drop-zone-text {   
-           font-size1 em ;   
-           padding5 px ;   
+           font-size:1em ;   
+           padding:5px ;   
       }
       .auth-button ,#chooseFileButton ,#uploadButton {   
-           font-size1.1 em ;   
-           padding8 px ,15 px ;   
+           font-size:1.1em ;   
+           padding: 8px ,15px ;   
       }   
-} @media (max-width480 px) {   
+} @media (max-width 480px) {   
       .heading {   
-           font-size5.0 em ;   
+           font-size: 5.0em ;   
       }
       .subheading {   
-           font-size1.8 em ;   
+           font-size: 1.8em ;   
       }
       .description {   
-           font-size1.2 em ;   
+           font-size: 1.2 em ;   
       }
       .drop-zone-text {   
-           font-size1.1 em ;   
-           padding5 px ;   
+           font-size: 1.1 em ;   
+           padding: 5px ;   
       }
       .auth-button ,#chooseFileButton ,#uploadButton {   
-           font-size1.1 em ;   
-           padding5 px ,10 px ;   
+           font-size: 1.1 em ;   
+           padding: 5px ,10px ;   
       }   
 } 

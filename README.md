@@ -1,6 +1,6 @@
 # P2P-FileSharing-Web
-Devoloping a P2P File sharing website
-First open this code Folder in VSCODE
-Then after opening this folder please save this and click on run button in app.py and it will show you the http link please copy that and paste it in your browser
-Please ensure that all the libraries installed properly for reference what all libraries needed to be installed just go to reqirements.txt file 
-For more detailed information of project u can go to https://youtu.be/HSF12jJARaA?si=W-yH8qOqI0tpeCYN
+• Developed a functional peer-to-peer file sharing website using Python and Flask.
+• Implemented file upload features and generated shareable links for uploaded files.
+• Enabled flexible sharing options via WhatsApp, email, or direct link copying.
+• Implemented secure user authentication using SQL databases
+• Technologies: Python , Flask, WebSocket, HTML, CSS, JavaScript, React Js
